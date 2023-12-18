@@ -1,0 +1,49 @@
+// All Pair Shortest Path - Floyd Warshall
+
+/* Problem statment : The problem is to find the shortest distances between every pair of vertices in a given edge-weighted directed graph. The graph is represented as an adjacency
+                   matrix of size n*n. Matrix[i][j] denotes the weight of the edge from i to j. If Matrix[i][j]=-1, it means there is no edge from i to j. Do it in-place.
+*/
+
+Solution: 
+
+class Solution {
+  public:
+	void shortest_distance(vector<vector<int>>&matrix){
+	    // Code here
+	    int n = matrix.size();
+	    
+	    //additional condition according to question 
+	    for(int i = 0; i<n; i++){
+	        for(int j = 0; j<n; j++){
+	            if(matrix[i][j]== -1){
+	                matrix[i][j] = 1e9;
+	            }
+	            if(i == j){
+	                matrix[i][j] = 0;
+	            }
+	        }
+	    }
+	    
+	    //Main logic of Floyd Warshall Algorithm
+	    //All pair Shortest path
+	    for(int m = 0; m<n; m++){
+	        //Run for every vertex
+	        //The following loops will update the matrix for vertex m, of shortest path (if we found via m)
+	        for(int i = 0; i<n; i++){
+	            for(int j = 0; j<n;j++){
+	                //Update shortest path
+	                matrix[i][j] = min(matrix[i][j], matrix[i][m]+matrix[m][j]);
+	            }
+	        }
+	    }
+	    
+	    //for this question only
+	    for(int i = 0; i<n; i++){
+	        for(int j = 0; j<n; j++){
+	            if(matrix[i][j]== 1e9){
+	                matrix[i][j] = -1;
+	            }
+	        }
+	    }
+	}
+};
